@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>منصة مستر محمد عمارة | العلوم والكيمياء</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #18181b;
+      --bg-card: #27272a;
+      --bg-input: #3f3f46;
+      --primary-red: #dc2626;
+      --primary-red-hover: #b91c1c;
+      --accent-yellow: #facc15;
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --border-color: #3f3f46;
+      --success: #16a34a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* الهيدر العلوي */
+    header {
+      background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+      border-bottom: 4px solid var(--primary-red);
+      padding: 1.2rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    header h1 {
+      color: var(--accent-yellow);
+      font-size: 1.8rem;
+      font-weight: 900;
+      margin-bottom: 0.2rem;
+    }
+
+    header p {
+      color: var(--text-main);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    header .badge {
+      display: inline-block;
+      background-color: var(--primary-red);
+      color: #fff;
+      padding: 0.2rem 0.9rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      font-weight: 700;
+    }
+
+    /* شريط التنقل */
+    nav {
+      background-color: var(--bg-card);
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-btn {
+      background-color: transparent;
+      color: var(--text-main);
+      border: 2px solid var(--border-color);
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      background-color: var(--primary-red);
+      border-color: var(--primary-red);
+      color: #fff;
+    }
+
+    .nav-btn.teacher-btn {
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
+    }
+
+    .nav-btn.teacher-btn:hover, .nav-btn.teacher-btn.active {
+      background-color: var(--accent-yellow);
+      color: #18181b;
+    }
+
+    /* الحاوية الرئيسية */
+    main {
+      max-width: 960px;
+      width: 100%;
+      margin: 1.5rem auto;
+      padding: 0 1rem;
+      flex: 1;
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      color: var(--accent-yellow);
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid var(--primary-red);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* البطاقات */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-right: 5px solid var(--accent-yellow);
+      border-radius: 10px;
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .card.exam-card {
+      border-right-color: var(--primary-red);
+    }
+
+    .card h3 {
+      color: #fff;
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .meta-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .tag {
+      background-color: var(--bg-input);
+      color: var(--accent-yellow);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .btn {
+      display: inline-block;
+      text-align: center;
+      background-color: var(--primary-red);
+      color: #fff;
+      border: none;
+      padding: 0.65rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+      width: 100%;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-red-hover);
+    }
+
+    .btn-yellow {
+      background-color: var(--accent-yellow);
+      color: #18181b;
+    }
+
+    .btn-yellow:hover {
+      background-color: #eab308;
+    }
+
+    /* واجهة دخول الاختبار */
+    .exam-box {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 700;
+      color: var(--accent-yellow);
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-input);
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .error-msg {
+      color: #f87171;
+      font-size: 0.9rem;
+      margin-top: 0.4rem;
+      font-weight: 700;
+    }
+
+    /* شريط المؤقت والأسئلة */
+    .exam-header-bar {
+      background-color: #111827;
+      border: 2px solid var(--primary-red);
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      position: sticky;
+      top: 62px;
+      z-index: 90;
+    }
+
+    .timer {
+      background-color: var(--primary-red);
+      color: #fff;
+      padding: 0.3rem 0.9rem;
+      border-radius: 8px;
+      font-weight: 900;
+      font-size: 1.1rem;
+      direction: ltr;
+    }
+
+    .question-item {
+      background-color: #1f1f23;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .question-text {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 0.8rem;
+      color: #fff;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 0.65rem 0.9rem;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .option-label:hover {
+      border-color: var(--accent-yellow);
+    }
+
+    .option-label input[type="radio"] {
+      accent-color: var(--primary-red);
+      width: 18px;
+      height: 18px;
+    }
+
+    /* نتيجة الطالب */
+    .result-card {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .score-circle {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 6px solid var(--accent-yellow);
+      background-color: #111827;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 1rem auto;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--accent-yellow);
+    }
+
+    /* جدول لوحة تحكم المعلم */
+    .table-wrapper {
+      overflow-x: auto;
+      margin-top: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: var(--bg-card);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 0.75rem;
+      text-align: right;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.9rem;
+    }
+
+    th {
+      background-color: #111827;
+      color: var(--accent-yellow);
+    }
+
+    footer {
+      background-color: #111827;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 1rem;
+      border-top: 2px solid var(--border-color);
+      font-size: 0.85rem;
+      margin-top: 2rem;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>منصة مستر محمد عمارة</h1>
+    <p>معلم العلوم والكيمياء والعلوم المتكاملة</p>
+    <span class="badge">مدرسة الشوافين الثانوية المشتركة</span>
+  </header>
+
+  <nav>
+    <button class="nav-btn active" onclick="switchTab('exams-tab', this)">الاختبارات الإلكترونية</button>
+    <button class="nav-btn" onclick="switchTab('resources-tab', this)">المذكرات والتقييمات (PDF)</button>
+    <button class="nav-btn teacher-btn" onclick="switchTab('teacher-tab', this)">لوحة تحكم المعلم</button>
+  </nav>
+
+  <main>
+    <!-- قسم الاختبارات الإلكترونية -->
+    <section id="exams-tab" class="section active">
+      <div class="section-title">
+        <span>الاختبارات المتاحة حالياً</span>
+      </div>
+
+      <!-- قائمة الاختبارات -->
+      <div id="exams-list" class="grid"></div>
+
+      <!-- شاشة تسجيل بيانات الطالب قبل البدء -->
+      <div id="exam-intro" class="exam-box hidden">
+        <h2 id="intro-exam-title" style="color: var(--accent-yellow); margin-bottom: 0.5rem;"></h2>
+        <p id="intro-exam-desc" style="color: var(--text-muted); margin-bottom: 1rem;"></p>
+        
+        <div class="form-group">
+          <label for="student-name">اسم الطالب رباعياً (إجباري):</label>
+          <input type="text" id="student-name" placeholder="مثال: أحمد محمد محمود علي" />
+          <div id="name-error" class="error-msg hidden">⚠️ يرجى كتابة الاسم رباعياً (4 أسماء على الأقل) للدخول إلى الاختبار.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="student-class">الصف / الشعبة:</label>
+          <select id="student-class">
+            <option value="الصف الأول الثانوي - علوم متكاملة">الصف الأول الثانوي - علوم متكاملة</option>
+            <option value="الصف الثاني الثانوي - كيمياء">الصف الثاني الثانوي - كيمياء</option>
+            <option value="المرحلة الإعدادية - علوم">المرحلة الإعدادية - علوم</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 0.6rem; margin-top: 1rem;">
+          <button class="btn" onclick="startSelectedExam()">بدء الاختبار الآن</button>
+          <button class="btn btn-yellow" style="width: 40%;" onclick="cancelExamIntro()">رجوع</button>
+        </div>
+      </div>
+
+      <!-- شاشة الأسئلة النشطة -->
+      <div id="exam-runner" class="hidden">
+        <div class="exam-header-bar">
+          <div>
+            <strong id="active-student-display" style="color: var(--accent-yellow); font-size: 0.95rem;"></strong>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">عدد الأسئلة: <span id="q-count-display"></span></div>
+          </div>
+          <div class="timer" id="timer-display">15:00</div>
+        </div>
+
+        <div id="questions-container"></div>
+
+        <button class="btn" style="font-size: 1.1rem; padding: 0.9rem;" onclick="submitExam(false)">تسليم الإجابات وعرض النتيجة</button>
+      </div>
+
+      <!-- شاشة النتيجة النهائية -->
+      <div id="exam-result" class="exam-box result-card hidden">
+        <h2 style="color: var(--accent-yellow);">تم تسليم الاختبار بنجاح!</h2>
+        <p id="result-student-name" style="font-weight: 700; margin-top: 0.3rem;"></p>
+        <div class="score-circle">
+          <span id="score-value">0 / 0</span>
+          <span style="font-size: 0.8rem; color: #fff;">الدرجة</span>
+        </div>
+        <p id="submission-status" style="color: #4ade80; font-weight: 700; margin-bottom: 1rem;"></p>
+        <div id="review-container" style="text-align: right; margin-top: 1.5rem;"></div>
+        <button class="btn btn-yellow" style="margin-top: 1rem;" onclick="resetToExamList()">العودة لقائمة الاختبارات</button>
+      </div>
+    </section>
+
+    <!-- قسم المذكرات والتقييمات -->
+    <section id="resources-tab" class="section">
+      <div class="section-title">
+        <span>المذكرات، الملخصات، والتقييمات الأسبوعية</span>
+      </div>
+      <div id="resources-list" class="grid"></div>
+    </section>
+
+    <!-- لوحة تحكم المعلم -->
+    <section id="teacher-tab" class="section">
+      <div class="section-title">
+        <span>لوحة تحكم مستر محمد عمارة</span>
+      </div>
+
+      <div id="teacher-login-box" class="exam-box" style="max-width: 450px; margin: 0 auto;">
+        <div class="form-group">
+          <label>كلمة مرور المعلم:</label>
+          <input type="password" id="teacher-pass" placeholder="أدخل كلمة المرور..." />
+          <div id="teacher-pass-err" class="error-msg hidden">كلمة المرور غير صحيحة!</div>
+        </div>
+        <button class="btn btn-yellow" onclick="loginTeacher()">دخول</button>
+      </div>
+
+      <div id="teacher-dashboard" class="hidden">
+        <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem;">
+          <button class="btn btn-yellow" style="width: auto;" onclick="exportResultsCSV()">📥 تصدير الدرجات إلى Excel (CSV)</button>
+          <button class="btn" style="width: auto;" onclick="unlockLocalAttempt()">🔓 فتح إعادة محاولة على هذا الجهاز</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>اسم الطالب</th>
+                <th>الصف</th>
+                <th>الاختبار</th>
+                <th>الدرجة</th>
+                <th>التوقيت</th>
+              </tr>
+            </thead>
+            <tbody id="results-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    جميع الحقوق محفوظة &copy; 2026 - منصة مستر محمد عمارة للعلوم والكيمياء
+  </footer>
+
+  <!-- Firebase SDK (اختياري - لتخزين نتائج 60+ طالب لحظياً في السحابة) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // ضع بيانات مشروع Firebase الخاص بك هنا لربط قاعدة البيانات السحابية:
+    const firebaseConfig = {
+      apiKey: "", // ضع API_KEY هنا
+      authDomain: "",
+      projectId: "", // ضع PROJECT_ID هنا
+      storageBucket: "",
+      messagingSenderId: "",
+      appId: ""
+    };
+
+    window.db = null;
+    window.firestoreFuncs = { collection, addDoc, getDocs, query, orderBy };
+
+    if (firebaseConfig.apiKey && firebaseConfig.projectId) {
+      const app = initializeApp(firebaseConfig);
+      window.db = getFirestore(app);
+    }
+  </script>
+
+  <script>
+    // ==========================================
+    // 1. إعدادات المنصة (عدّلها بسهولة)
+    // ==========================================
+    const TEACHER_PASSWORD = "2026"; // كلمة مرور لوحة المعلم
+    const FORMSPREE_ENDPOINT = "";   // اختياري: ضع رابط Formspree هنا كنسخة احتياطية للإيميل
+
+    // قائمة المذكرات والتقييمات (أضف روابط Google Drive الخاصة بك هنا)
+    const RESOURCES_DATA = [
+      {
+        title: "تقييمات الأسبوع التاسع - النظم البيئية المائية",
+        grade: "الصف الأول الثانوي - علوم متكاملة",
+        desc: "نماذج (أ، ب، ج) مجابة بالكامل ومنسقة للطباعة والمراجعة.",
+        link: "#" // ضع رابط ملف PDF على Google Drive هنا
+      },
+      {
+        title: "ملخص طبقات الغلاف الجوي والضغط الجوي",
+        grade: "الصف الأول الثانوي - علوم متكاملة",
+        desc: "شرح مبسط مع مسائل حساب درجة الحرارة والضغط الجوي.",
+        link: "#"
+      },
+      {
+        title: "مذكرة مراجعة الكيمياء والروابط الكيميائية",
+        grade: "المرحلة الثانوية",
+        desc: "أهم الأسئلة والتدريبات المتوقعة.",
+        link: "#"
+      }
+    ];
+
+    // قائمة الاختبارات الإلكترونية (يمكنك إضافة أي اختبار جديد بنسخ الكتلة)
+    const EXAMS_DATA = [
+      {
+        id: "exam_aquatic_01",
+        title: "اختبار تأثير الغازات والإشعاع والضغط على البيئات المائية",
+        grade: "الصف الأول الثانوي - علوم متكاملة",
+        durationMinutes: 15,
+        description: "اختبار إلكتروني شامل - الزمن 15 دقيقة - محاولة واحدة فقط.",
+        questions: [
+          {
+            q: "1. تزداد ذائبية غاز الأكسجين وثاني أكسيد الكربون في المياه العذبة والمالحة عند:",
+            options: ["ارتفاع درجة الحرارة", "انخفاض درجة الحرارة", "زيادة الملوحة", "قلة حركة الأمواج"],
+            answer: 1
+          },
+          {
+            q: "2. يزداد الضغط الكلي الواقع على كائن بحري بمقدار 1 ضغط جوي (1 atm) كلما نزلنا تحت سطح الماء بمقدار:",
+            options: ["1 متر", "5 أمتار", "10 أمتار", "100 متر"],
+            answer: 2
+          },
+          {
+            q: "3. كائن بحري يعيش على عمق 40 متراً تحت سطح البحر، يكون الضغط الكلي المؤثر عليه مساوياً:",
+            options: ["4 atm", "5 atm", "3 atm", "40 atm"],
+            answer: 1
+          },
+          {
+            q: "4. المنطقة المضاءة (Euphotic Zone) في البحار والمحيطات تمتد تقريباً حتى عمق:",
+            options: ["50 متراً", "200 متر", "1000 متر", "4000 متر"],
+            answer: 1
+          },
+          {
+            q: "5. المصدر الرئيسي للأكسجين الذائب في المسطحات المائية هو:",
+            options: ["تنفس الأسماك", "البناء الضوئي للطحالب والغلاف الجوي", "تحلل المواد العضوية", "البراكين البحرية"],
+            answer: 1
+          }
+        ]
+      }
+    ];
+
+    // ==========================================
+    // 2. منطق تشغيل المنصة والاختبارات
+    // ==========================================
+    let currentExam = null;
+    let timerInterval = null;
+    let secondsRemaining = 0;
+    let studentInfo = { name: "", className: "" };
+
+    function initPlatform() {
+      // عرض الاختبارات
+      const examsList = document.getElementById("exams-list");
+      examsList.innerHTML = EXAMS_DATA.map(exam => `
+        <div class="card exam-card">
+          <div>
+            <div class="meta-tags">
+              <span class="tag">${exam.grade}</span>
+              <span class="tag">⏱️ ${exam.durationMinutes} دقيقة</span>
+              <span class="tag">📝 ${exam.questions.length} أسئلة</span>
+            </div>
+            <h3>${exam.title}</h3>
+            <p>${exam.description}</p>
+          </div>
+          <button class="btn" onclick="openExamIntro('${exam.id}')">دخول الاختبار</button>
+        </div>
+      `).join("");
+
+      // عرض المذكرات
+      const resList = document.getElementById("resources-list");
+      resList.innerHTML = RESOURCES_DATA.map(res => `
+        <div class="card">
+          <div>
+            <div class="meta-tags"><span class="tag">${res.grade}</span></div>
+            <h3>${res.title}</h3>
+            <p>${res.desc}</p>
+          </div>
+          <a href="${res.link}" target="_blank" class="btn btn-yellow">فتح / تحميل الملف (PDF)</a>
+        </div>
+      `).join("");
+    }
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+      document.getElementById(tabId).classList.add("active");
+      btn.classList.add("active");
+    }
+
+    function openExamIntro(examId) {
+      // التحقق من قفل المحاولة الواحدة
+      if (localStorage.getItem("completed_" + examId)) {
+        alert("⚠️ لقد قمت بأداء هذا الاختبار مسبقاً من هذا الجهاز. غير مسموح بإعادة المحاولة إلا بإذن مستر محمد عمارة.");
+        return;
+      }
+
+      currentExam = EXAMS_DATA.find(e => e.id === examId);
+      document.getElementById("intro-exam-title").innerText = currentExam.title;
+      document.getElementById("intro-exam-desc").innerText = currentExam.description;
+      document.getElementById("exams-list").classList.add("hidden");
+      document.getElementById("exam-intro").classList.remove("hidden");
+    }
+
+    function cancelExamIntro() {
+      document.getElementById("exam-intro").classList.add("hidden");
+      document.getElementById("exams-list").classList.remove("hidden");
+    }
+
+    function startSelectedExam() {
+      const nameInput = document.getElementById("student-name").value.trim();
+      const nameParts = nameInput.split(/\s+/).filter(Boolean);
+
+      if (nameParts.length < 4) {
+        document.getElementById("name-error").classList.remove("hidden");
+        return;
+      }
+
+      document.getElementById("name-error").classList.add("hidden");
+      studentInfo.name = nameParts.join(" ");
+      studentInfo.className = document.getElementById("student-class").value;
+
+      document.getElementById("exam-intro").classList.add("hidden");
+      document.getElementById("exam-runner").classList.remove("hidden");
+
+      document.getElementById("active-student-display").innerText = "الطالب: " + studentInfo.name;
+      document.getElementById("q-count-display").innerText = currentExam.questions.length;
+
+      // بناء الأسئلة
+      const qContainer = document.getElementById("questions-container");
+      qContainer.innerHTML = currentExam.questions.map((item, idx) => `
+        <div class="question-item">
+          <div class="question-text">${item.q}</div>
+          ${item.options.map((opt, optIdx) => `
+            <label class="option-label">
+              <input type="radio" name="q_${idx}" value="${optIdx}">
+              <span>${opt}</span>
+            </label>
+          `).join("")}
+        </div>
+      `).join("");
+
+      // بدء العداد التنازلي
+      secondsRemaining = currentExam.durationMinutes * 60;
+      updateTimerUI();
+      timerInterval = setInterval(() => {
+        secondsRemaining--;
+        updateTimerUI();
+        if (secondsRemaining <= 0) {
+          clearInterval(timerInterval);
+          submitExam(true);
+        }
+      }, 1000);
+    }
+
+    function updateTimerUI() {
+      const mins = Math.floor(secondsRemaining / 60);
+      const secs = secondsRemaining % 60;
+      document.getElementById("timer-display").innerText =
+        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    async function submitExam(isAuto) {
+      if (!isAuto && !confirm("هل أنت متأكد من إنهاء الاختبار وتسليم إجاباتك؟")) return;
+
+      clearInterval(timerInterval);
+
+      let score = 0;
+      let reviewHTML = "<h3 style='color: var(--accent-yellow); margin-bottom:0.8rem;'>مراجعة الإجابات:</h3>";
+
+      currentExam.questions.forEach((item, idx) => {
+        const selected = document.querySelector(`input[name="q_${idx}"]:checked`);
+        const userAns = selected ? parseInt(selected.value) : -1;
+        const isCorrect = userAns === item.answer;
+        if (isCorrect) score++;
+
+        reviewHTML += `
+          <div style="background:#1f1f23; padding:0.8rem; border-radius:8px; margin-bottom:0.6rem; border-right:4px solid ${isCorrect ? '#16a34a' : '#dc2626'};">
+            <div style="font-weight:700;">${item.q}</div>
+            <div style="font-size:0.9rem; color:${isCorrect ? '#4ade80' : '#f87171'};">
+              إجابتك: ${userAns >= 0 ? item.options[userAns] : "لم يتم الاختيار"}
+            </div>
+            ${!isCorrect ? `<div style="font-size:0.9rem; color:#facc15;">الإجابة الصحيحة: ${item.options[item.answer]}</div>` : ""}
+          </div>
+        `;
+      });
+
+      const total = currentExam.questions.length;
+      const record = {
+        studentName: studentInfo.name,
+        className: studentInfo.className,
+        examTitle: currentExam.title,
+        score: `${score} / ${total}`,
+        numericScore: score,
+        totalQuestions: total,
+        timestamp: new Date().toLocaleString("ar-EG")
+      };
+
+      // قفل المحاولة محلياً
+      localStorage.setItem("completed_" + currentExam.id, "true");
+
+      // حفظ في التخزين المحلي كنسخة احتياطية
+      const localRecords = JSON.parse(localStorage.getItem("emara_exam_results") || "[]");
+      localRecords.push(record);
+      localStorage.setItem("emara_exam_results", JSON.stringify(localRecords));
+
+      // عرض شاشة النتيجة
+      document.getElementById("exam-runner").classList.add("hidden");
+      document.getElementById("exam-result").classList.remove("hidden");
+      document.getElementById("result-student-name").innerText = `${record.studentName} (${record.className})`;
+      document.getElementById("score-value").innerText = record.score;
+      document.getElementById("review-container").innerHTML = reviewHTML;
+      const statusEl = document.getElementById("submission-status");
+      statusEl.innerText = "⏳ جاري إرسال الدرجة إلى سجل مستر محمد عمارة...";
+
+      // الإرسال إلى Firebase Firestore (إذا تم تفعيله)
+      if (window.db) {
+        try {
+          await window.firestoreFuncs.addDoc(
+            window.firestoreFuncs.collection(window.db, "exam_results"),
+            record
+          );
+          statusEl.innerText = "✅ تم تسجيل درجتك بنجاح في قاعدة بيانات المنصة!";
+        } catch (err) {
+          console.error(err);
+          statusEl.innerText = "✅ تم حفظ نتيجتك محلياً بنجاح.";
+        }
+      } else if (FORMSPREE_ENDPOINT) {
+        await fetch(FORMSPREE_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(record)
+        });
+        statusEl.innerText = "✅ تم إرسال نتيجتك إلى المعلم بنجاح!";
+      } else {
+        statusEl.innerText = "✅ تم اعتماد الدرجة وحفظها بنجاح.";
+      }
+    }
+
+    function resetToExamList() {
+      document.getElementById("exam-result").classList.add("hidden");
+      document.getElementById("exams-list").classList.remove("hidden");
+    }
+
+    // ==========================================
+    // 3. لوحة تحكم المعلم
+    // ==========================================
+    async function loginTeacher() {
+      const pass = document.getElementById("teacher-pass").value;
+      if (pass !== TEACHER_PASSWORD) {
+        document.getElementById("teacher-pass-err").classList.remove("hidden");
+        return;
+      }
+      document.getElementById("teacher-pass-err").classList.add("hidden");
+      document.getElementById("teacher-login-box").classList.add("hidden");
+      document.getElementById("teacher-dashboard").classList.remove("hidden");
+
+      await loadTeacherResults();
+    }
+
+    async function loadTeacherResults() {
+      const tbody = document.getElementById("results-table-body");
+      tbody.innerHTML = "<tr><td colspan='5'>جاري تحميل الدرجات...</td></tr>";
+
+      let allResults = JSON.parse(localStorage.getItem("emara_exam_results") || "[]");
+
+      if (window.db) {
+        try {
+          const snap = await window.firestoreFuncs.getDocs(
+            window.firestoreFuncs.collection(window.db, "exam_results")
+          );
+          allResults = [];
+          snap.forEach(doc => allResults.push(doc.data()));
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      window.cachedResults = allResults;
+
+      if (allResults.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='5'>لا توجد نتائج مسجلة حتى الآن.</td></tr>";
+        return;
+      }
+
+      tbody.innerHTML = allResults.map(r => `
+        <tr>
+          <td>${r.studentName}</td>
+          <td>${r.className}</td>
+          <td>${r.examTitle}</td>
+          <td style="color: var(--accent-yellow); font-weight:700;">${r.score}</td>
+          <td>${r.timestamp}</td>
+        </tr>
+      `).join("");
+    }
+
+    function exportResultsCSV() {
+      const data = window.cachedResults || [];
+      if (data.length === 0) {
+        alert("لا توجد درجات لتصديرها.");
+        return;
+      }
+      let csv = "\uFEFFاسم الطالب,الصف,الاختبار,الدرجة,التوقيت\n";
+      data.forEach(r => {
+        csv += `"${r.studentName}","${r.className}","${r.examTitle}","${r.score}","${r.timestamp}"\n`;
+      });
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "درجات_منصة_مستر_محمد_عمارة.csv";
+      a.click();
+    }
+
+    function unlockLocalAttempt() {
+      EXAMS_DATA.forEach(e => localStorage.removeItem("completed_" + e.id));
+      alert("تم إعادة فتح المحاولات على هذا الجهاز بنجاح.");
+    }
+
+    initPlatform();
+  </script>
+</body>
+</html>
